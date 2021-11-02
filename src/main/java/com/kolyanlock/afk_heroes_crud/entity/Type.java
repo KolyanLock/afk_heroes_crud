@@ -1,11 +1,19 @@
 package com.kolyanlock.afk_heroes_crud.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "types")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Type {
 
     @Id
@@ -13,27 +21,8 @@ public class Type {
 
     private String description;
 
-    public Type() {
-    }
+    @OneToMany(mappedBy = "type")
+    @OrderBy("name")
+    private List<Hero> heroList;
 
-    public Type(String type, String description) {
-        this.type = type;
-        this.description = description;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

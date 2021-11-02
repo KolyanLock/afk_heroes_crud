@@ -1,11 +1,19 @@
 package com.kolyanlock.afk_heroes_crud.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "classes")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class HeroClass {
 
     @Id
@@ -13,27 +21,7 @@ public class HeroClass {
 
     private String description;
 
-    public HeroClass() {
-    }
-
-    public HeroClass(String title, String description) {
-        this.title = title;
-        this.description = description;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    @OneToMany(mappedBy = "heroClass")
+    @OrderBy("name")
+    private List<Hero> heroList;
 }
