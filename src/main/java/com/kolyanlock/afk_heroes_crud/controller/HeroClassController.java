@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,16 +30,17 @@ public class HeroClassController {
     }
 
     @PostMapping("/classes/new")
-    public HeroClassDTO addNewFraction(@RequestBody HeroClassDTO heroClassDTO) {
+    public HeroClassDTO addNewFraction(@Valid @RequestBody HeroClassDTO heroClassDTO) {
         return heroClassService.addNewHeroClass(heroClassDTO);
     }
 
     @PutMapping("/classes/{oldTitle}")
     public Page<HeroClassWithHeroListDTO> updateFraction(@PathVariable String oldTitle,
-                                                        @RequestBody HeroClassDTO heroClassDTO,
-                                                        Pageable pageable) {
+                                                         @Valid @RequestBody HeroClassDTO heroClassDTO,
+                                                         Pageable pageable) {
         return heroClassService.updateHeroClass(oldTitle, heroClassDTO, pageable);
     }
+
     @DeleteMapping("/classes/{title}")
     public String deleteFraction(@PathVariable String title) {
         return heroClassService.deleteHeroClass(title);

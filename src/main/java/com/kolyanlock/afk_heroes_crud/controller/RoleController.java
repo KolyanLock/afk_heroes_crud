@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,16 +31,17 @@ public class RoleController {
     }
 
     @PostMapping("/roles/new")
-    public RoleDTO addNewRole(@RequestBody RoleDTO roleDTO) {
+    public RoleDTO addNewRole(@Valid @RequestBody RoleDTO roleDTO) {
         return roleService.addNewRole(roleDTO);
     }
 
     @PutMapping("/roles/{oldTitle}")
     public Page<RoleWithHeroListDTO> updateRole(@PathVariable String oldTitle,
-                                                        @RequestBody RoleDTO roleDTO,
-                                                        Pageable pageable) {
+                                                @Valid @RequestBody RoleDTO roleDTO,
+                                                Pageable pageable) {
         return roleService.updateRole(oldTitle, roleDTO, pageable);
     }
+
     @DeleteMapping("/roles/{title}")
     public String deleteRole(@PathVariable String title) {
         return roleService.deleteRole(title);

@@ -1,13 +1,15 @@
 package com.kolyanlock.afk_heroes_crud.controller;
 
+import com.kolyanlock.afk_heroes_crud.dto.hero.HeroDTO;
 import com.kolyanlock.afk_heroes_crud.dto.hero.HeroForListDTO;
-import com.kolyanlock.afk_heroes_crud.dto.hero.HeroMainDTO;
 import com.kolyanlock.afk_heroes_crud.service.HeroService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
@@ -21,18 +23,18 @@ public class HeroController {
     }
 
     @GetMapping("/heroes/{id}")
-    public HeroMainDTO getEmployee(@PathVariable int id) {
+    public HeroDTO getEmployee(@PathVariable int id) {
         return heroService.getHeroById(id);
     }
 
     @PostMapping("/heroes/new")
-    public HeroMainDTO addNewHero(@RequestBody HeroMainDTO heroMainDTO) {
-        return heroService.addNewHero(heroMainDTO);
+    public HeroDTO addNewHero(@Valid @RequestBody HeroDTO heroDTO) {
+        return heroService.addNewHero(heroDTO);
     }
 
     @PutMapping("/heroes/update")
-    public HeroMainDTO updateHero(@RequestBody HeroMainDTO heroMainDTO) {
-        return heroService.updateHero(heroMainDTO);
+    public HeroDTO updateHero(@Valid @RequestBody HeroDTO heroDTO) {
+        return heroService.updateHero(heroDTO);
     }
     @DeleteMapping("/heroes/{id}")
     public String deleteHero(@PathVariable int id) {

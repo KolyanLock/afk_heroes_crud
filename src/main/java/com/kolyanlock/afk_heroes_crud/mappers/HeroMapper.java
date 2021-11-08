@@ -1,7 +1,7 @@
 package com.kolyanlock.afk_heroes_crud.mappers;
 
+import com.kolyanlock.afk_heroes_crud.dto.hero.HeroDTO;
 import com.kolyanlock.afk_heroes_crud.dto.hero.HeroForListDTO;
-import com.kolyanlock.afk_heroes_crud.dto.hero.HeroMainDTO;
 import com.kolyanlock.afk_heroes_crud.entity.Hero;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,10 +17,11 @@ public interface HeroMapper {
     HeroForListDTO toHeroForListDTO(Hero hero);
 
 
+    @Mapping(target = "gender", source = "gender", defaultValue = "Not specified")
     @Mapping(target = "background", source = "background", defaultValue = "Lore has not yet been written.")
-    HeroMainDTO toHeroMainDTO(Hero hero);
+    HeroDTO toHeroDTO(Hero hero);
 
-    Hero toHeroEntity(HeroMainDTO heroMainDTO);
+    Hero toHeroEntity(HeroDTO heroDTO);
 
-    List<HeroForListDTO> toListHeroForListDTO(List<Hero> heroList);
+//    List<HeroForListDTO> toListHeroForListDTO(List<Hero> heroList);
 }

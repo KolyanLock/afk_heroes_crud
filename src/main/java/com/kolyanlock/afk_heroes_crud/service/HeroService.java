@@ -1,14 +1,18 @@
 package com.kolyanlock.afk_heroes_crud.service;
 
+import com.kolyanlock.afk_heroes_crud.dto.hero.HeroDTO;
 import com.kolyanlock.afk_heroes_crud.dto.hero.HeroForListDTO;
-import com.kolyanlock.afk_heroes_crud.dto.hero.HeroMainDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface HeroService {
     Page<HeroForListDTO> getAllHeroes(Pageable pageable);
-    HeroMainDTO getHeroById(int id);
-    HeroMainDTO addNewHero(HeroMainDTO heroMainDTO);
-    HeroMainDTO updateHero(HeroMainDTO heroMainDTO);
+
+    HeroDTO getHeroById(int id);
+
+    HeroDTO addNewHero(HeroDTO heroDTO);
+
+    HeroDTO updateHero(HeroDTO heroDTO);
+
     String deleteHero(int id);
 }

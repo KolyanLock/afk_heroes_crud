@@ -1,8 +1,8 @@
 package com.kolyanlock.afk_heroes_crud.service;
 
 import com.kolyanlock.afk_heroes_crud.dao.HeroRepository;
+import com.kolyanlock.afk_heroes_crud.dto.hero.HeroDTO;
 import com.kolyanlock.afk_heroes_crud.dto.hero.HeroForListDTO;
-import com.kolyanlock.afk_heroes_crud.dto.hero.HeroMainDTO;
 import com.kolyanlock.afk_heroes_crud.entity.Hero;
 import com.kolyanlock.afk_heroes_crud.mappers.HeroMapper;
 import lombok.RequiredArgsConstructor;
@@ -22,21 +22,21 @@ public class HeroServiceImpl implements HeroService {
     }
 
     @Override
-    public HeroMainDTO getHeroById(int id) {
-        return HeroMapper.INSTANCE.toHeroMainDTO(heroRepository.getById(id));
+    public HeroDTO getHeroById(int id) {
+        return HeroMapper.INSTANCE.toHeroDTO(heroRepository.getById(id));
     }
 
     @Override
-    public HeroMainDTO addNewHero(HeroMainDTO heroMainDTO) {
-        Hero newHero = heroRepository.save(HeroMapper.INSTANCE.toHeroEntity(heroMainDTO));
-        return HeroMapper.INSTANCE.toHeroMainDTO(newHero);
+    public HeroDTO addNewHero(HeroDTO heroDTO) {
+        Hero newHero = heroRepository.save(HeroMapper.INSTANCE.toHeroEntity(heroDTO));
+        return HeroMapper.INSTANCE.toHeroDTO(newHero);
     }
 
     @Override
-    public HeroMainDTO updateHero(HeroMainDTO heroMainDTO) {
-        Hero heroForUpdate = HeroMapper.INSTANCE.toHeroEntity(heroMainDTO);
+    public HeroDTO updateHero(HeroDTO heroDTO) {
+        Hero heroForUpdate = HeroMapper.INSTANCE.toHeroEntity(heroDTO);
         heroRepository.save(heroForUpdate);
-        return HeroMapper.INSTANCE.toHeroMainDTO(heroForUpdate);
+        return HeroMapper.INSTANCE.toHeroDTO(heroForUpdate);
     }
 
     @Override

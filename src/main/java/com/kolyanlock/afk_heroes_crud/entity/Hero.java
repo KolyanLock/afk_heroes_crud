@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Hero {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @OrderColumn

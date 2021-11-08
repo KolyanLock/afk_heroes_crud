@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,16 +31,17 @@ public class TypeController {
     }
 
     @PostMapping("/types/new")
-    public TypeDTO addNewType(@RequestBody TypeDTO typeDTO) {
+    public TypeDTO addNewType(@Valid @RequestBody TypeDTO typeDTO) {
         return typeService.addNewType(typeDTO);
     }
 
     @PutMapping("/types/{oldType}")
     public Page<TypeWithHeroListDTO> updateType(@PathVariable String oldType,
-                                                @RequestBody TypeDTO typeDTO,
+                                                @Valid @RequestBody TypeDTO typeDTO,
                                                 Pageable pageable) {
         return typeService.updateType(oldType, typeDTO, pageable);
     }
+
     @DeleteMapping("/types/{type}")
     public String deleteType(@PathVariable String type) {
         return typeService.deleteType(type);

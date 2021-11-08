@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -30,16 +31,17 @@ public class FractionController {
     }
 
     @PostMapping("/factions/new")
-    public FractionDTO addNewFraction(@RequestBody FractionDTO fractionDTO) {
+    public FractionDTO addNewFraction(@Valid @RequestBody FractionDTO fractionDTO) {
         return fractionService.addNewFraction(fractionDTO);
     }
 
     @PutMapping("/factions/{oldTitle}")
     public Page<FractionWithHeroListDTO> updateFraction(@PathVariable String oldTitle,
-                                                        @RequestBody FractionDTO fractionDTO,
+                                                        @Valid @RequestBody FractionDTO fractionDTO,
                                                         Pageable pageable) {
         return fractionService.updateFraction(oldTitle, fractionDTO, pageable);
     }
+
     @DeleteMapping("/factions/{title}")
     public String deleteFraction(@PathVariable String title) {
         return fractionService.deleteFraction(title);
