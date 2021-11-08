@@ -33,6 +33,7 @@ public class RoleServiceImpls implements RoleService {
         String id = roleDTO.getTitle();
         if (roleRepository.findById(id).isPresent()) {
             roleDTO.setDescription("This Role already exists!");
+            return roleDTO;
             //"Role with title " + id + " already exists!";
         }
         Role newRole = RoleMapper.INSTANCE.toRoleEntity(roleDTO);
@@ -44,11 +45,7 @@ public class RoleServiceImpls implements RoleService {
     public Page<RoleWithHeroListDTO> updateRole(String oldTitle, RoleDTO roleDTO, Pageable pageable) {
         String newTitle = roleDTO.getTitle();
         String newDescription = roleDTO.getDescription();
-        try {
-            roleRepository.updateQuery(newTitle, newDescription, oldTitle);
-        } catch (Exception e) {
-            System.out.println("Role update!");
-        }
+        roleRepository.updateQuery(newTitle, newDescription, oldTitle);
         return getRole(newTitle, pageable);
     }
 

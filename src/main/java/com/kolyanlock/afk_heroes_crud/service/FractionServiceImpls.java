@@ -32,9 +32,10 @@ public class FractionServiceImpls implements FractionService {
     @Override
     public FractionDTO addNewFraction(FractionDTO fractionDTO) {
         String id = fractionDTO.getTitle();
-        if (fractionRepository.findById(id).isPresent()){
+        if (fractionRepository.findById(id).isPresent()) {
             fractionDTO.setDescription("This fraction already exists!");
-             //"Fraction with title " + id + " already exists!";
+            return fractionDTO;
+            //"Fraction with title " + id + " already exists!";
         }
         Fraction newFraction = FractionMapper.INSTANCE.toFractionEntity(fractionDTO);
         fractionRepository.save(newFraction);
@@ -45,11 +46,7 @@ public class FractionServiceImpls implements FractionService {
     public Page<FractionWithHeroListDTO> updateFraction(String oldTitle, FractionDTO fractionDTO, Pageable pageable) {
         String newTitle = fractionDTO.getTitle();
         String newDescription = fractionDTO.getDescription();
-        try {
-            fractionRepository.updateQuery(newTitle, newDescription, oldTitle);
-        } catch (Exception e) {
-            System.out.println("fraction update!");
-        }
+        fractionRepository.updateQuery(newTitle, newDescription, oldTitle);
         return getFraction(newTitle, pageable);
     }
 

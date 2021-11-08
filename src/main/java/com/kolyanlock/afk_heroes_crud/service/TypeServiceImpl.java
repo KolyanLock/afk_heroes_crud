@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class TypeServiceImpl implements TypeService{
+public class TypeServiceImpl implements TypeService {
     private final TypeRepository typeRepository;
 
     @Override
@@ -31,8 +31,9 @@ public class TypeServiceImpl implements TypeService{
     @Override
     public TypeDTO addNewType(TypeDTO typeDTO) {
         String id = typeDTO.getType();
-        if (typeRepository.findById(id).isPresent()){
+        if (typeRepository.findById(id).isPresent()) {
             typeDTO.setDescription("This Type already exists!");
+            return typeDTO;
             //"Role with type " + id + " already exists!";
         }
         Type newType = TypeMapper.INSTANCE.toTypeEntity(typeDTO);
@@ -44,11 +45,7 @@ public class TypeServiceImpl implements TypeService{
     public Page<TypeWithHeroListDTO> updateType(String oldType, TypeDTO typeDTO, Pageable pageable) {
         String newType = typeDTO.getType();
         String newDescription = typeDTO.getDescription();
-        try {
-            typeRepository.updateQuery(newType, newDescription, oldType);
-        } catch (Exception e) {
-            System.out.println("Type update!");
-        }
+        typeRepository.updateQuery(newType, newDescription, oldType);
         return getType(newType, pageable);
     }
 

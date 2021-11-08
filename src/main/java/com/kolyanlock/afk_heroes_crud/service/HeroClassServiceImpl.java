@@ -34,6 +34,7 @@ public class HeroClassServiceImpl implements HeroClassService {
         String id = heroClassDTO.getTitle();
         if (heroClassRepository.findById(id).isPresent()){
             heroClassDTO.setDescription("This Hero Class already exists!");
+            return  heroClassDTO;
              //"Hero Class with title " + id + " already exists!";
         }
         HeroClass newHeroClass = HeroClassMapper.INSTANCE.toHeroClassEntity(heroClassDTO);
@@ -45,11 +46,7 @@ public class HeroClassServiceImpl implements HeroClassService {
     public Page<HeroClassWithHeroListDTO> updateHeroClass(String oldTitle, HeroClassDTO heroClassDTO, Pageable pageable) {
         String newTitle = heroClassDTO.getTitle();
         String newDescription = heroClassDTO.getDescription();
-        try {
-            heroClassRepository.updateQuery(newTitle, newDescription, oldTitle);
-        } catch (Exception e) {
-            System.out.println("Hero Class update!");
-        }
+        heroClassRepository.updateQuery(newTitle, newDescription, oldTitle);
         return getHeroClass(newTitle, pageable);
     }
 
