@@ -18,7 +18,8 @@ public class Fraction {
 
     private String description;
 
-    @OneToMany(mappedBy = "fraction")
+    @OneToMany
+    @JoinColumn(name = "fraction")
     @OrderBy("name")
     private List<Hero> heroList;
 

@@ -4,11 +4,16 @@ import com.kolyanlock.afk_heroes_crud.dao.HeroRepository;
 import com.kolyanlock.afk_heroes_crud.dto.hero.HeroDTO;
 import com.kolyanlock.afk_heroes_crud.dto.hero.HeroForListDTO;
 import com.kolyanlock.afk_heroes_crud.entity.Hero;
+import com.kolyanlock.afk_heroes_crud.exception.EntityNotFoundException;
 import com.kolyanlock.afk_heroes_crud.mappers.HeroMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +28,11 @@ public class HeroServiceImpl implements HeroService {
 
     @Override
     public HeroDTO getHeroById(int id) {
-        return HeroMapper.INSTANCE.toHeroDTO(heroRepository.getById(id));
+        Optional<Hero> optionalHero = heroRepository.findById(id);
+        if (!optionalHero.isPresent()) {
+            throw new EntityNotFoundException("Hero with tittle " + id + " not found!");
+        }
+        return HeroMapper.INSTANCE.toHeroDTO(optionalHero.get());
     }
 
     @Override
@@ -41,7 +50,11 @@ public class HeroServiceImpl implements HeroService {
 
     @Override
     public String deleteHero(int id) {
-        heroRepository.deleteById(id);
+        try {
+            heroRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new EntityNotFoundException("Hero with id " + id + " not found!");
+        }
         return "Hero with id = " + id + " was deleted";
     }
 }

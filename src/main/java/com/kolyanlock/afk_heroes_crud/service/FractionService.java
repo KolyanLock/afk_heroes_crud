@@ -18,4 +18,5 @@ public interface FractionService {
     Page<FractionWithHeroListDTO> updateFraction(String oldTitle, FractionDTO fractionDTO, Pageable pageable);
 
     String deleteFraction(String title);
+
 }
