@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface HeroMapper {
@@ -22,6 +21,4 @@ public interface HeroMapper {
     HeroDTO toHeroDTO(Hero hero);
 
     Hero toHeroEntity(HeroDTO heroDTO);
-
-//    List<HeroForListDTO> toListHeroForListDTO(List<Hero> heroList);
 }

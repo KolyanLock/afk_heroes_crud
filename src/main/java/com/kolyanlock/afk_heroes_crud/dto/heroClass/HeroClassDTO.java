@@ -1,4 +1,4 @@
-package com.kolyanlock.afk_heroes_crud.dto.heroclass;
+package com.kolyanlock.afk_heroes_crud.dto.heroClass;
 
 import lombok.Getter;
 import lombok.Setter;

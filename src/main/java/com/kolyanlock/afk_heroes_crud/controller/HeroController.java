@@ -18,12 +18,12 @@ public class HeroController {
     private final HeroService heroService;
 
     @GetMapping("/heroes")
-    public Page<HeroForListDTO> getAllHeroes(@PageableDefault(sort = {"name"}) Pageable pageable) {
+    public Page<HeroForListDTO> getAllHeroes(@PageableDefault(sort = {"fraction", "name"}, page = 1) Pageable pageable) {
         return heroService.getAllHeroes(pageable);
     }
 
     @GetMapping("/heroes/{id}")
-    public HeroDTO getEmployee(@PathVariable int id) {
+    public HeroDTO getHero(@PathVariable int id) {
         return heroService.getHeroById(id);
     }
 
@@ -36,8 +36,33 @@ public class HeroController {
     public HeroDTO updateHero(@Valid @RequestBody HeroDTO heroDTO) {
         return heroService.updateHero(heroDTO);
     }
+
     @DeleteMapping("/heroes/{id}")
     public String deleteHero(@PathVariable int id) {
         return heroService.deleteHero(id);
+    }
+
+    @GetMapping("/factions/{title}/heroes")
+    public Page<HeroDTO> getAllHeroesByFraction(@PathVariable String title,
+                                                @PageableDefault(size = 2) Pageable pageable) {
+        return heroService.findAllByFraction(title, pageable);
+    }
+
+    @GetMapping("/classes/{heroClass}/heroes")
+    public Page<HeroDTO> getAllHeroesByHeroClass(@PathVariable String heroClass,
+                                                 @PageableDefault(size = 2) Pageable pageable) {
+        return heroService.findAllByHeroClass(heroClass, pageable);
+    }
+
+    @GetMapping("/roles/{role}/heroes")
+    public Page<HeroDTO> getAllHeroesByRole(@PathVariable String role,
+                                            @PageableDefault(size = 2) Pageable pageable) {
+        return heroService.findAllByRole(role, pageable);
+    }
+
+    @GetMapping("/types/{type}/heroes")
+    public Page<HeroDTO> getAllHeroesByType(@PathVariable String type,
+                                            @PageableDefault(size = 2) Pageable pageable) {
+        return heroService.findAllByType(type, pageable);
     }
 }

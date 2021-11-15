@@ -2,7 +2,6 @@ package com.kolyanlock.afk_heroes_crud.mappers;
 
 
 import com.kolyanlock.afk_heroes_crud.dto.type.TypeDTO;
-import com.kolyanlock.afk_heroes_crud.dto.type.TypeWithHeroListDTO;
 import com.kolyanlock.afk_heroes_crud.entity.Type;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,11 +16,8 @@ public interface TypeMapper {
 
     TypeDTO toTypeDTO(Type type);
 
-    @Mapping(target = "heroList", ignore = true)
     Type toTypeEntity(TypeDTO typeDTO);
 
     @Mapping(target = "description", source = "description", defaultValue = "There is no description yet.")
     List<TypeDTO> toListTypeDTO(List<Type> typeList);
-
-    TypeWithHeroListDTO toTypeWithHeroListDTO(Type type);
 }

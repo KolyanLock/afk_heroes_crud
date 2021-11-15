@@ -57,4 +57,24 @@ public class HeroServiceImpl implements HeroService {
         }
         return "Hero with id = " + id + " was deleted";
     }
+
+    @Override
+    public Page<HeroDTO> findAllByFraction(String title, Pageable pageable) {
+        return heroRepository.findAllByFraction(title, pageable).map(HeroMapper.INSTANCE::toHeroDTO);
+    }
+
+    @Override
+    public Page<HeroDTO> findAllByHeroClass(String heroClass, Pageable pageable) {
+        return heroRepository.findAllByHeroClass(heroClass, pageable).map(HeroMapper.INSTANCE::toHeroDTO);
+    }
+
+    @Override
+    public Page<HeroDTO> findAllByRole(String role, Pageable pageable) {
+        return heroRepository.findAllByPrimaryRole(role, pageable).map(HeroMapper.INSTANCE::toHeroDTO);
+    }
+
+    @Override
+    public Page<HeroDTO> findAllByType(String type, Pageable pageable) {
+        return heroRepository.findAllByType(type, pageable).map(HeroMapper.INSTANCE::toHeroDTO);
+    }
 }

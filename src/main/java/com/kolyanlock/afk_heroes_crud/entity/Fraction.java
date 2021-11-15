@@ -3,7 +3,6 @@ package com.kolyanlock.afk_heroes_crud.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "factions")
@@ -17,10 +16,4 @@ public class Fraction {
     private String title;
 
     private String description;
-
-    @OneToMany
-    @JoinColumn(name = "fraction")
-    @OrderBy("name")
-    private List<Hero> heroList;
-
 }

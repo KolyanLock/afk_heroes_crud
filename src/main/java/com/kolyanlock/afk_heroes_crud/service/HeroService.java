@@ -15,4 +15,12 @@ public interface HeroService {
     HeroDTO updateHero(HeroDTO heroDTO);
 
     String deleteHero(int id);
+
+    Page<HeroDTO> findAllByFraction(String title, Pageable pageable);
+
+    Page<HeroDTO> findAllByHeroClass(String heroClass, Pageable pageable);
+
+    Page<HeroDTO> findAllByRole(String role, Pageable pageable);
+
+    Page<HeroDTO> findAllByType(String type, Pageable pageable);
 }

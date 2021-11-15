@@ -1,9 +1,6 @@
 package com.kolyanlock.afk_heroes_crud.service;
 
 import com.kolyanlock.afk_heroes_crud.dto.type.TypeDTO;
-import com.kolyanlock.afk_heroes_crud.dto.type.TypeWithHeroListDTO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
@@ -11,11 +8,11 @@ import java.util.List;
 public interface TypeService {
     List<TypeDTO> getAllTypes(Sort sort);
 
-    Page<TypeWithHeroListDTO> getType(String title, Pageable pageable);
+    TypeDTO getType(String type);
 
     TypeDTO addNewType(TypeDTO typeDTO);
 
-    Page<TypeWithHeroListDTO> updateType(String oldTitle, TypeDTO typeDTO, Pageable pageable);
+    TypeDTO updateType(String oldType, TypeDTO typeDTO);
 
-    String deleteType(String title);
+    String deleteType(String type);
 }

@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "roles")
@@ -20,9 +19,4 @@ public class Role {
     private String title;
 
     private String description;
-
-    @OneToMany(mappedBy = "primaryRole")
-    @OrderBy("name")
-    private List<Hero> heroList;
-
 }

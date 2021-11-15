@@ -1,13 +1,9 @@
 package com.kolyanlock.afk_heroes_crud.controller;
 
 import com.kolyanlock.afk_heroes_crud.dto.type.TypeDTO;
-import com.kolyanlock.afk_heroes_crud.dto.type.TypeWithHeroListDTO;
 import com.kolyanlock.afk_heroes_crud.service.TypeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,13 +17,13 @@ public class TypeController {
 
 
     @GetMapping("/types")
-    public List<TypeDTO> getAllType(Sort sort) {
+    public List<TypeDTO> getAllTypes(Sort sort) {
         return typeService.getAllTypes(sort);
     }
 
     @GetMapping("/types/{type}")
-    public Page<TypeWithHeroListDTO> getType(@PathVariable String type, @PageableDefault Pageable pageable) {
-        return typeService.getType(type, pageable);
+    public TypeDTO getType(@PathVariable String type) {
+        return typeService.getType(type);
     }
 
     @PostMapping("/types/new")
@@ -35,11 +31,10 @@ public class TypeController {
         return typeService.addNewType(typeDTO);
     }
 
-    @PutMapping("/types/{oldType}")
-    public Page<TypeWithHeroListDTO> updateType(@PathVariable String oldType,
-                                                @Valid @RequestBody TypeDTO typeDTO,
-                                                Pageable pageable) {
-        return typeService.updateType(oldType, typeDTO, pageable);
+    @PutMapping("/types/{oldTitle}")
+    public TypeDTO updateType(@PathVariable String oldTitle,
+                              @Valid @RequestBody TypeDTO typeDTO) {
+        return typeService.updateType(oldTitle, typeDTO);
     }
 
     @DeleteMapping("/types/{type}")

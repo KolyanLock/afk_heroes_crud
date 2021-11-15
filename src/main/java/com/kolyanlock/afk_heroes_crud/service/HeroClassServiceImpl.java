@@ -1,8 +1,7 @@
 package com.kolyanlock.afk_heroes_crud.service;
 
 import com.kolyanlock.afk_heroes_crud.dao.HeroClassRepository;
-import com.kolyanlock.afk_heroes_crud.dto.heroclass.HeroClassDTO;
-import com.kolyanlock.afk_heroes_crud.dto.heroclass.HeroClassWithHeroListDTO;
+import com.kolyanlock.afk_heroes_crud.dto.heroClass.HeroClassDTO;
 import com.kolyanlock.afk_heroes_crud.entity.HeroClass;
 import com.kolyanlock.afk_heroes_crud.exception.EntityExistsException;
 import com.kolyanlock.afk_heroes_crud.exception.EntityNotFoundException;
@@ -10,12 +9,11 @@ import com.kolyanlock.afk_heroes_crud.mappers.HeroClassMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,11 +27,11 @@ public class HeroClassServiceImpl implements HeroClassService {
     }
 
     @Override
-    public Page<HeroClassWithHeroListDTO> getHeroClass(String title, Pageable pageable) {
-        Page<HeroClass> heroClassPage = heroClassRepository.findByTitle(title, pageable);
-        if (heroClassPage.isEmpty())
+    public HeroClassDTO getHeroClass(String title) {
+        Optional<HeroClass> heroClassDTOOptional = heroClassRepository.findById(title);
+        if (!heroClassDTOOptional.isPresent())
             throw new EntityNotFoundException("Class with tittle " + title + " not found!");
-        return heroClassPage.map(HeroClassMapper.INSTANCE::toHeroClassWithHeroListDTO);
+        return HeroClassMapper.INSTANCE.toHeroClassDTO(heroClassDTOOptional.get());
     }
 
     @Override
@@ -48,18 +46,22 @@ public class HeroClassServiceImpl implements HeroClassService {
     }
 
     @Override
-    public Page<HeroClassWithHeroListDTO> updateHeroClass(String oldTitle, HeroClassDTO heroClassDTO, Pageable pageable) {
+    public HeroClassDTO updateHeroClass(String oldTitle, HeroClassDTO heroClassDTO) {
         if (!heroClassRepository.findById(oldTitle).isPresent()) {
-            throw new EntityNotFoundException("Class with tittle " + oldTitle + " not found!");
+            throw new EntityNotFoundException("HeroClass with tittle " + oldTitle + " not found!");
         }
         String newTitle = heroClassDTO.getTitle();
         String newDescription = heroClassDTO.getDescription();
         try {
             heroClassRepository.updateQuery(newTitle, newDescription, oldTitle);
         } catch (DataIntegrityViolationException e) {
-            throw new EntityExistsException("Fraction with title " + newTitle + " already exists!");
+            throw new EntityExistsException("Class with title " + newTitle + " already exists!");
         }
-        return getHeroClass(newTitle, pageable);
+        Optional<HeroClass> optionalHeroClass = heroClassRepository.findById(newTitle);
+        if (!optionalHeroClass.isPresent()) {
+            throw new EntityNotFoundException("HeroClass with tittle " + oldTitle + " not found!");
+        }
+        return HeroClassMapper.INSTANCE.toHeroClassDTO(optionalHeroClass.get());
     }
 
     @Override

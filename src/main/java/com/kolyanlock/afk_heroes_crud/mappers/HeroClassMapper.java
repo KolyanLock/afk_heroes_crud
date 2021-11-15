@@ -1,7 +1,6 @@
 package com.kolyanlock.afk_heroes_crud.mappers;
 
-import com.kolyanlock.afk_heroes_crud.dto.heroclass.HeroClassDTO;
-import com.kolyanlock.afk_heroes_crud.dto.heroclass.HeroClassWithHeroListDTO;
+import com.kolyanlock.afk_heroes_crud.dto.heroClass.HeroClassDTO;
 import com.kolyanlock.afk_heroes_crud.entity.HeroClass;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,12 +15,9 @@ public interface HeroClassMapper {
 
     HeroClassDTO toHeroClassDTO(HeroClass heroClass);
 
-    @Mapping(target = "heroList", ignore = true)
     HeroClass toHeroClassEntity(HeroClassDTO heroClassDTO);
 
     @Mapping(target = "description", source = "description", defaultValue = "There is no description yet.")
     List<HeroClassDTO> toListHeroClassDTO(List<HeroClass> heroClassList);
-
-    HeroClassWithHeroListDTO toHeroClassWithHeroListDTO(HeroClass heroClass);
 
 }

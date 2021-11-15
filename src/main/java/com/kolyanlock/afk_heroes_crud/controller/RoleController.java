@@ -1,13 +1,9 @@
 package com.kolyanlock.afk_heroes_crud.controller;
 
 import com.kolyanlock.afk_heroes_crud.dto.role.RoleDTO;
-import com.kolyanlock.afk_heroes_crud.dto.role.RoleWithHeroListDTO;
 import com.kolyanlock.afk_heroes_crud.service.RoleService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,13 +17,13 @@ public class RoleController {
 
 
     @GetMapping("/roles")
-    public List<RoleDTO> getAllRole(Sort sort) {
+    public List<RoleDTO> getAllRoles(Sort sort) {
         return roleService.getAllRoles(sort);
     }
 
     @GetMapping("/roles/{title}")
-    public Page<RoleWithHeroListDTO> getRole(@PathVariable String title, @PageableDefault Pageable pageable) {
-        return roleService.getRole(title, pageable);
+    public RoleDTO getRole(@PathVariable String title) {
+        return roleService.getRole(title);
     }
 
     @PostMapping("/roles/new")
@@ -36,10 +32,9 @@ public class RoleController {
     }
 
     @PutMapping("/roles/{oldTitle}")
-    public Page<RoleWithHeroListDTO> updateRole(@PathVariable String oldTitle,
-                                                @Valid @RequestBody RoleDTO roleDTO,
-                                                Pageable pageable) {
-        return roleService.updateRole(oldTitle, roleDTO, pageable);
+    public RoleDTO updateRole(@PathVariable String oldTitle,
+                              @Valid @RequestBody RoleDTO roleDTO) {
+        return roleService.updateRole(oldTitle, roleDTO);
     }
 
     @DeleteMapping("/roles/{title}")
