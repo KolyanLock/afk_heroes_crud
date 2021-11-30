@@ -15,19 +15,25 @@ public class Hero {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
-    @OrderColumn
+    @OrderColumn(name = "name")
     private String name;
 
+    @Column(name = "title")
     private String title;
 
+    @Column(name = "gender")
     private String gender;
 
+    @Column(name = "ultimate")
     private String ultimate;
 
+    @Column(name = "fraction")
     private String fraction;
 
+    @Column(name = "type")
     private String type;
 
     @Column(name = "class")
@@ -36,5 +42,6 @@ public class Hero {
     @Column(name = "primary_role")
     private String primaryRole;
 
+    @Column(name = "background")
     private String background;
 }

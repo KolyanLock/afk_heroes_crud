@@ -10,34 +10,34 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/types")
 @RequiredArgsConstructor
 public class TypeController {
     private final TypeService typeService;
 
 
-    @GetMapping("/types")
+    @GetMapping
     public List<TypeDTO> getAllTypes(Sort sort) {
         return typeService.getAllTypes(sort);
     }
 
-    @GetMapping("/types/{type}")
+    @GetMapping("/{type}")
     public TypeDTO getType(@PathVariable String type) {
         return typeService.getType(type);
     }
 
-    @PostMapping("/types/new")
+    @PostMapping("/new")
     public TypeDTO addNewType(@Valid @RequestBody TypeDTO typeDTO) {
         return typeService.addNewType(typeDTO);
     }
 
-    @PutMapping("/types/{oldTitle}")
+    @PutMapping("/{oldTitle}")
     public TypeDTO updateType(@PathVariable String oldTitle,
                               @Valid @RequestBody TypeDTO typeDTO) {
         return typeService.updateType(oldTitle, typeDTO);
     }
 
-    @DeleteMapping("/types/{type}")
+    @DeleteMapping("/{type}")
     public String deleteType(@PathVariable String type) {
         return typeService.deleteType(type);
     }

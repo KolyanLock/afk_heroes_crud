@@ -3,9 +3,8 @@ package com.kolyanlock.afk_heroes_crud.service;
 import com.kolyanlock.afk_heroes_crud.dao.TypeRepository;
 import com.kolyanlock.afk_heroes_crud.dto.type.TypeDTO;
 import com.kolyanlock.afk_heroes_crud.entity.Type;
-import com.kolyanlock.afk_heroes_crud.exception.EntityExistsException;
-import com.kolyanlock.afk_heroes_crud.exception.EntityNotFoundException;
-import com.kolyanlock.afk_heroes_crud.mappers.TypeMapper;
+import com.kolyanlock.afk_heroes_crud.exception.TypeExistsException;
+import com.kolyanlock.afk_heroes_crud.exception.TypeNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -15,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static com.kolyanlock.afk_heroes_crud.mappers.TypeMapper.TYPE_MAPPER;
+
 @Service
 @RequiredArgsConstructor
 public class TypeServiceImpl implements TypeService {
@@ -22,24 +23,24 @@ public class TypeServiceImpl implements TypeService {
 
     @Override
     public List<TypeDTO> getAllTypes(Sort sort) {
-        return TypeMapper.INSTANCE.toListTypeDTO(typeRepository.findAll(sort));
+        return TYPE_MAPPER.toListTypeDTO(typeRepository.findAll(sort));
     }
 
     @Override
     public TypeDTO getType(String type) {
         Optional<Type> typeDTOOptional = typeRepository.findById(type);
         if (!typeDTOOptional.isPresent())
-            throw new EntityNotFoundException("Type with tittle " + type + " not found!");
-        return TypeMapper.INSTANCE.toTypeDTO(typeDTOOptional.get());
+            throw new TypeNotFoundException(type);
+        return TYPE_MAPPER.toTypeDTO(typeDTOOptional.get());
     }
 
     @Override
     public TypeDTO addNewType(TypeDTO typeDTO) {
         String id = typeDTO.getType();
         if (typeRepository.findById(id).isPresent()){
-            throw new EntityExistsException("Type with type " + id + " already exists!");
+            throw new TypeExistsException(id);
         }
-        Type newType = TypeMapper.INSTANCE.toTypeEntity(typeDTO);
+        Type newType = TYPE_MAPPER.toTypeEntity(typeDTO);
         typeRepository.save(newType);
         return typeDTO;
     }
@@ -47,20 +48,20 @@ public class TypeServiceImpl implements TypeService {
     @Override
     public TypeDTO updateType(String oldType, TypeDTO typeDTO) {
         if (!typeRepository.findById(oldType).isPresent()) {
-            throw new EntityNotFoundException("Type with tittle " + oldType + " not found!");
+            throw new TypeNotFoundException(oldType);
         }
         String newType = typeDTO.getType();
         String newDescription = typeDTO.getDescription();
         try {
             typeRepository.updateQuery(newType, newDescription, oldType);
         } catch (DataIntegrityViolationException e) {
-            throw new EntityExistsException("Type with type " + newType + " already exists!");
+            throw new TypeExistsException(newType);
         }
         Optional<Type> optionalType = typeRepository.findById(newType);
         if (!optionalType.isPresent()) {
-            throw new EntityNotFoundException("Type with tittle " + oldType + " not found!");
+            throw new TypeNotFoundException(oldType);
         }
-        return TypeMapper.INSTANCE.toTypeDTO(optionalType.get());
+        return TYPE_MAPPER.toTypeDTO(optionalType.get());
     }
 
     @Override
@@ -68,7 +69,7 @@ public class TypeServiceImpl implements TypeService {
         try {
             typeRepository.deleteById(type);
         } catch (EmptyResultDataAccessException e) {
-            throw new EntityNotFoundException("Type with tittle " + type + " not found!");
+            throw new TypeNotFoundException(type);
         }
         return "Type with type " + type + " was deleted";
     }

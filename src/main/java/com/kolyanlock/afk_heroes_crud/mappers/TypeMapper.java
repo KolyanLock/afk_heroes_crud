@@ -12,7 +12,7 @@ import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface TypeMapper {
-    TypeMapper INSTANCE = Mappers.getMapper( TypeMapper.class );
+    TypeMapper TYPE_MAPPER = Mappers.getMapper( TypeMapper.class );
 
     TypeDTO toTypeDTO(Type type);
 

@@ -11,7 +11,7 @@ import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface HeroClassMapper {
-    HeroClassMapper INSTANCE = Mappers.getMapper( HeroClassMapper.class );
+    HeroClassMapper HERO_CLASS_MAPPER = Mappers.getMapper( HeroClassMapper.class );
 
     HeroClassDTO toHeroClassDTO(HeroClass heroClass);
 

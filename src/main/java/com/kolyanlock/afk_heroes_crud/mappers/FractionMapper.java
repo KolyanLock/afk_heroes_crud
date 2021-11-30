@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface FractionMapper {
-    FractionMapper INSTANCE = Mappers.getMapper( FractionMapper.class );
+    FractionMapper FRACTION_MAPPER = Mappers.getMapper( FractionMapper.class );
 
     FractionDTO toFractionDTO(Fraction fraction);
 

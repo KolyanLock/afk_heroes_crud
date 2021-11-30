@@ -12,8 +12,10 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Fraction {
 
-    @Id()
+    @Id
+    @Column(name = "title")
     private String title;
 
+    @Column(name = "description")
     private String description;
 }

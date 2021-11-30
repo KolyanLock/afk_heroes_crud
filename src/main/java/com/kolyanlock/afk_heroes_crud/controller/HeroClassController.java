@@ -10,33 +10,33 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/classes")
 @RequiredArgsConstructor
 public class HeroClassController {
     private final HeroClassService heroClassService;
 
-    @GetMapping("/classes")
+    @GetMapping
     public List<HeroClassDTO> getAllHeroClasses(Sort sort) {
         return heroClassService.getAllHeroClasses(sort);
     }
 
-    @GetMapping("/classes/{title}")
+    @GetMapping("/{title}")
     public HeroClassDTO getHeroClass(@PathVariable String title) {
         return heroClassService.getHeroClass(title);
     }
 
-    @PostMapping("/classes/new")
+    @PostMapping("/new")
     public HeroClassDTO addNewHeroClass(@Valid @RequestBody HeroClassDTO heroClassDTO) {
         return heroClassService.addNewHeroClass(heroClassDTO);
     }
 
-    @PutMapping("/classes/{oldTitle}")
+    @PutMapping("/{oldTitle}")
     public HeroClassDTO updateHeroClass(@PathVariable String oldTitle,
                                         @Valid @RequestBody HeroClassDTO heroClassDTO) {
         return heroClassService.updateHeroClass(oldTitle, heroClassDTO);
     }
 
-    @DeleteMapping("/classes/{title}")
+    @DeleteMapping("/{title}")
     public String deleteHeroClass(@PathVariable String title) {
         return heroClassService.deleteHeroClass(title);
     }

@@ -12,33 +12,33 @@ import javax.validation.Valid;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/factions")
 @RequiredArgsConstructor
 public class FractionController {
     private final FractionService fractionService;
 
-    @GetMapping("/factions")
+    @GetMapping
     public Page<FractionDTO> getAllFactions(@PageableDefault Pageable pageable) {
         return fractionService.getAllFactions(pageable);
     }
 
-    @GetMapping("/factions/{title}")
+    @GetMapping("/{title}")
     public FractionDTO getFraction(@PathVariable String title) {
         return fractionService.getFraction(title);
     }
 
-    @PostMapping("/factions/new")
+    @PostMapping("/new")
     public FractionDTO addNewFraction(@Valid @RequestBody FractionDTO fractionDTO) {
         return fractionService.addNewFraction(fractionDTO);
     }
 
-    @PutMapping("/factions/{oldTitle}")
+    @PutMapping("/{oldTitle}")
     public FractionDTO updateFraction(@PathVariable String oldTitle,
                                       @Valid @RequestBody FractionDTO fractionDTO) {
         return fractionService.updateFraction(oldTitle, fractionDTO);
     }
 
-    @DeleteMapping("/factions/{title}")
+    @DeleteMapping("/{title}")
     public String deleteFraction(@PathVariable String title) {
         return fractionService.deleteFraction(title);
     }

@@ -11,7 +11,7 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface HeroMapper {
-    HeroMapper INSTANCE = Mappers.getMapper( HeroMapper.class );
+    HeroMapper HERO_MAPPER = Mappers.getMapper( HeroMapper.class );
 
     HeroForListDTO toHeroForListDTO(Hero hero);
 

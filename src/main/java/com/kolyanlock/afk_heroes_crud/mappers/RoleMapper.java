@@ -11,7 +11,7 @@ import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface RoleMapper {
-    RoleMapper INSTANCE = Mappers.getMapper( RoleMapper.class );
+    RoleMapper ROLE_MAPPER = Mappers.getMapper( RoleMapper.class );
 
     RoleDTO toRoleDTO(Role role);
 

@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 public class RESTSecurityConfig extends WebSecurityConfigurerAdapter {
     private final DataSource dataSource;
 
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource);
@@ -26,6 +27,6 @@ public class RESTSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/heroes/**").hasRole("MANAGER")
                 .antMatchers("/api/**").hasRole("DEVELOPER")
                 .anyRequest().authenticated()
-                .and().formLogin();
+                .and().httpBasic();
     }
 }

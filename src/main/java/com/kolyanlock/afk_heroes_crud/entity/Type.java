@@ -16,7 +16,9 @@ import javax.persistence.*;
 public class Type {
 
     @Id
+    @Column(name = "type")
     private String type;
 
+    @Column(name = "description")
     private String description;
 }
