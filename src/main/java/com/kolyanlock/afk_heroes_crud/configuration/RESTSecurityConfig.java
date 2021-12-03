@@ -22,10 +22,11 @@ public class RESTSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/**").authenticated()
+        http.csrf().disable().authorizeRequests()
                 .antMatchers("/api/heroes/**").hasRole("MANAGER")
                 .antMatchers("/api/**").hasRole("DEVELOPER")
+                .antMatchers("/actuator/beans", "/actuator/mappings").hasRole("DEVELOPER")
+                .antMatchers("/actuator/health", "/actuator/info").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic();
     }
