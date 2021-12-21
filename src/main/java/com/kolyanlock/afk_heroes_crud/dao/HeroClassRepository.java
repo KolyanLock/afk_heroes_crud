@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
 
-public interface HeroClassRepository extends JpaRepository<HeroClass, String> {
+public interface HeroClassRepository extends JpaRepository<HeroClass, String>, HeroClassCustomRepository {
     @Modifying
     @Transactional
     @Query(value = "update HeroClass set title=?1, description=?2 where title=?3")

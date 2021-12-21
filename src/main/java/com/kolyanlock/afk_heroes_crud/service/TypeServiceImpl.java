@@ -41,8 +41,7 @@ public class TypeServiceImpl implements TypeService {
             throw new TypeExistsException(id);
         }
         Type newType = TYPE_MAPPER.toTypeEntity(typeDTO);
-        typeRepository.save(newType);
-        return typeDTO;
+        return TYPE_MAPPER.toTypeDTO(typeRepository.save(newType));
     }
 
     @Override
@@ -57,11 +56,7 @@ public class TypeServiceImpl implements TypeService {
         } catch (DataIntegrityViolationException e) {
             throw new TypeExistsException(newType);
         }
-        Optional<Type> optionalType = typeRepository.findById(newType);
-        if (!optionalType.isPresent()) {
-            throw new TypeNotFoundException(oldType);
-        }
-        return TYPE_MAPPER.toTypeDTO(optionalType.get());
+        return typeDTO;
     }
 
     @Override

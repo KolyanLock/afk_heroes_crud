@@ -58,11 +58,7 @@ public class FractionServiceImpls implements FractionService {
         } catch (DataIntegrityViolationException e) {
             throw new FractionExistsException(newTitle);
         }
-        Optional<Fraction> optionalFraction = fractionRepository.findById(newTitle);
-        if (!optionalFraction.isPresent()) {
-           throw new FractionNotFoundException(oldTitle);
-        }
-        return FRACTION_MAPPER.toFractionDTO(optionalFraction.get());
+        return fractionDTO;
     }
 
     @Override

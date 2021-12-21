@@ -42,8 +42,7 @@ public class HeroClassServiceImpl implements HeroClassService {
             throw new HeroClassExistsException(id);
         }
         HeroClass newHeroClass = HERO_CLASS_MAPPER.toHeroClassEntity(heroClassDTO);
-        heroClassRepository.save(newHeroClass);
-        return heroClassDTO;
+        return HERO_CLASS_MAPPER.toHeroClassDTO(heroClassRepository.save(newHeroClass));
     }
 
     @Override
@@ -54,15 +53,11 @@ public class HeroClassServiceImpl implements HeroClassService {
         String newTitle = heroClassDTO.getTitle();
         String newDescription = heroClassDTO.getDescription();
         try {
-            heroClassRepository.updateQuery(newTitle, newDescription, oldTitle);
+            heroClassRepository.update(newTitle, newDescription, oldTitle);
         } catch (DataIntegrityViolationException e) {
             throw new HeroClassExistsException(newTitle);
         }
-        Optional<HeroClass> optionalHeroClass = heroClassRepository.findById(newTitle);
-        if (!optionalHeroClass.isPresent()) {
-            throw new HeroClassNotFoundException(oldTitle);
-        }
-        return HERO_CLASS_MAPPER.toHeroClassDTO(optionalHeroClass.get());
+        return heroClassDTO;
     }
 
     @Override

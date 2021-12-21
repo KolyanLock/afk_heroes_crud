@@ -38,15 +38,14 @@ public class HeroServiceImpl implements HeroService {
 
     @Override
     public HeroDTO addNewHero(HeroDTO heroDTO) {
-        Hero newHero = heroRepository.save(HERO_MAPPER.toHeroEntity(heroDTO));
-        return HERO_MAPPER.toHeroDTO(newHero);
+        Hero newHero = HERO_MAPPER.toHeroEntity(heroDTO);
+        return HERO_MAPPER.toHeroDTO(heroRepository.save(newHero));
     }
 
     @Override
     public HeroDTO updateHero(HeroDTO heroDTO) {
         Hero heroForUpdate = HERO_MAPPER.toHeroEntity(heroDTO);
-        heroRepository.save(heroForUpdate);
-        return HERO_MAPPER.toHeroDTO(heroForUpdate);
+        return HERO_MAPPER.toHeroDTO(heroRepository.save(heroForUpdate));
     }
 
     @Override

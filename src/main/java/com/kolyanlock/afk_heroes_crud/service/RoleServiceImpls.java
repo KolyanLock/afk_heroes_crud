@@ -41,8 +41,7 @@ public class RoleServiceImpls implements RoleService {
             throw new RoleExistsException(id);
         }
         Role newRole = ROLE_MAPPER.toRoleEntity(roleDTO);
-        roleRepository.save(newRole);
-        return roleDTO;
+        return ROLE_MAPPER.toRoleDTO( roleRepository.save(newRole));
     }
 
     @Override
@@ -57,11 +56,7 @@ public class RoleServiceImpls implements RoleService {
         } catch (DataIntegrityViolationException e) {
             throw new RoleExistsException(newTitle);
         }
-        Optional<Role> optionalRole = roleRepository.findById(newTitle);
-        if (!optionalRole.isPresent()) {
-            throw new RoleNotFoundException(oldTitle);
-        }
-        return ROLE_MAPPER.toRoleDTO(optionalRole.get());
+        return roleDTO;
     }
 
     @Override
