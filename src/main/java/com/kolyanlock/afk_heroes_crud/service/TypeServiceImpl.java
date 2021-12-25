@@ -6,7 +6,6 @@ import com.kolyanlock.afk_heroes_crud.entity.Type;
 import com.kolyanlock.afk_heroes_crud.exception.TypeExistsException;
 import com.kolyanlock.afk_heroes_crud.exception.TypeNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -37,7 +36,7 @@ public class TypeServiceImpl implements TypeService {
     @Override
     public TypeDTO addNewType(TypeDTO typeDTO) {
         String id = typeDTO.getType();
-        if (typeRepository.findById(id).isPresent()){
+        if (typeRepository.findById(id).isPresent()) {
             throw new TypeExistsException(id);
         }
         Type newType = TYPE_MAPPER.toTypeEntity(typeDTO);
@@ -51,11 +50,10 @@ public class TypeServiceImpl implements TypeService {
         }
         String newType = typeDTO.getType();
         String newDescription = typeDTO.getDescription();
-        try {
-            typeRepository.updateQuery(newType, newDescription, oldType);
-        } catch (DataIntegrityViolationException e) {
-            throw new TypeExistsException(newType);
+        if (typeRepository.findById(newType).isPresent()) {
+            throw new TypeNotFoundException(newType);
         }
+        typeRepository.updateQuery(newType, newDescription, oldType);
         return typeDTO;
     }
 

@@ -6,7 +6,6 @@ import com.kolyanlock.afk_heroes_crud.entity.HeroClass;
 import com.kolyanlock.afk_heroes_crud.exception.HeroClassExistsException;
 import com.kolyanlock.afk_heroes_crud.exception.HeroClassNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -38,7 +37,7 @@ public class HeroClassServiceImpl implements HeroClassService {
     @Override
     public HeroClassDTO addNewHeroClass(HeroClassDTO heroClassDTO) {
         String id = heroClassDTO.getTitle();
-        if (heroClassRepository.findById(id).isPresent()){
+        if (heroClassRepository.findById(id).isPresent()) {
             throw new HeroClassExistsException(id);
         }
         HeroClass newHeroClass = HERO_CLASS_MAPPER.toHeroClassEntity(heroClassDTO);
@@ -52,11 +51,10 @@ public class HeroClassServiceImpl implements HeroClassService {
         }
         String newTitle = heroClassDTO.getTitle();
         String newDescription = heroClassDTO.getDescription();
-        try {
-            heroClassRepository.update(newTitle, newDescription, oldTitle);
-        } catch (DataIntegrityViolationException e) {
-            throw new HeroClassExistsException(newTitle);
+        if (heroClassRepository.findById(newTitle).isPresent()) {
+            throw new HeroClassNotFoundException(newTitle);
         }
+        heroClassRepository.update(newTitle, newDescription, oldTitle);
         return heroClassDTO;
     }
 

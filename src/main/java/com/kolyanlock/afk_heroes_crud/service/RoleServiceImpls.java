@@ -6,7 +6,6 @@ import com.kolyanlock.afk_heroes_crud.entity.Role;
 import com.kolyanlock.afk_heroes_crud.exception.RoleExistsException;
 import com.kolyanlock.afk_heroes_crud.exception.RoleNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -37,11 +36,11 @@ public class RoleServiceImpls implements RoleService {
     @Override
     public RoleDTO addNewRole(RoleDTO roleDTO) {
         String id = roleDTO.getTitle();
-        if (roleRepository.findById(id).isPresent()){
+        if (roleRepository.findById(id).isPresent()) {
             throw new RoleExistsException(id);
         }
         Role newRole = ROLE_MAPPER.toRoleEntity(roleDTO);
-        return ROLE_MAPPER.toRoleDTO( roleRepository.save(newRole));
+        return ROLE_MAPPER.toRoleDTO(roleRepository.save(newRole));
     }
 
     @Override
@@ -51,11 +50,10 @@ public class RoleServiceImpls implements RoleService {
         }
         String newTitle = roleDTO.getTitle();
         String newDescription = roleDTO.getDescription();
-        try {
-            roleRepository.updateQuery(newTitle, newDescription, oldTitle);
-        } catch (DataIntegrityViolationException e) {
-            throw new RoleExistsException(newTitle);
+        if (roleRepository.findById(newTitle).isPresent()) {
+            throw new RoleNotFoundException(newTitle);
         }
+        roleRepository.updateQuery(newTitle, newDescription, oldTitle);
         return roleDTO;
     }
 

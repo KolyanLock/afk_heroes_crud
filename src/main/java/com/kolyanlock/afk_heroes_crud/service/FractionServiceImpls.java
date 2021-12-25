@@ -6,7 +6,6 @@ import com.kolyanlock.afk_heroes_crud.entity.Fraction;
 import com.kolyanlock.afk_heroes_crud.exception.FractionExistsException;
 import com.kolyanlock.afk_heroes_crud.exception.FractionNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -53,11 +52,10 @@ public class FractionServiceImpls implements FractionService {
         }
         String newTitle = fractionDTO.getTitle();
         String newDescription = fractionDTO.getDescription();
-        try {
-            fractionRepository.updateQuery(newTitle, newDescription, oldTitle);
-        } catch (DataIntegrityViolationException e) {
+        if (fractionRepository.findById(newTitle).isPresent()) {
             throw new FractionExistsException(newTitle);
         }
+        fractionRepository.updateQuery(newTitle, newDescription, oldTitle);
         return fractionDTO;
     }
 
