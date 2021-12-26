@@ -42,13 +42,13 @@ public class HeroController {
         return heroService.deleteHero(id);
     }
 
-    @GetMapping("/{title}")
+    @GetMapping("/factions/{title}")
     public Page<HeroDTO> getAllHeroesByFraction(@PathVariable String title,
                                                 @PageableDefault(size = 2) Pageable pageable) {
         return heroService.findAllByFraction(title, pageable);
     }
 
-    @GetMapping("/{heroClass}")
+    @GetMapping("/classes/{heroClass}")
     public Page<HeroDTO> getAllHeroesByHeroClass(@PathVariable String heroClass,
                                                  @PageableDefault(size = 2) Pageable pageable) {
         return heroService.findAllByHeroClass(heroClass, pageable);
