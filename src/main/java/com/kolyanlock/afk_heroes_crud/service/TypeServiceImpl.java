@@ -1,6 +1,6 @@
 package com.kolyanlock.afk_heroes_crud.service;
 
-import com.kolyanlock.afk_heroes_crud.dao.TypeRepository;
+import com.kolyanlock.afk_heroes_crud.dao.Type.TypeRepository;
 import com.kolyanlock.afk_heroes_crud.dto.type.TypeDTO;
 import com.kolyanlock.afk_heroes_crud.entity.Type;
 import com.kolyanlock.afk_heroes_crud.exception.TypeExistsException;
@@ -53,7 +53,7 @@ public class TypeServiceImpl implements TypeService {
         if (typeRepository.findById(newType).isPresent()) {
             throw new TypeNotFoundException(newType);
         }
-        typeRepository.updateQuery(newType, newDescription, oldType);
+        typeRepository.update(newType, newDescription, oldType);
         return typeDTO;
     }
 

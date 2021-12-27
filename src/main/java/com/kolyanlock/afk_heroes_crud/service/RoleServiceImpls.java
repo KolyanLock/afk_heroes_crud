@@ -1,6 +1,6 @@
 package com.kolyanlock.afk_heroes_crud.service;
 
-import com.kolyanlock.afk_heroes_crud.dao.RoleRepository;
+import com.kolyanlock.afk_heroes_crud.dao.Role.RoleRepository;
 import com.kolyanlock.afk_heroes_crud.dto.role.RoleDTO;
 import com.kolyanlock.afk_heroes_crud.entity.Role;
 import com.kolyanlock.afk_heroes_crud.exception.RoleExistsException;
@@ -53,7 +53,7 @@ public class RoleServiceImpls implements RoleService {
         if (roleRepository.findById(newTitle).isPresent()) {
             throw new RoleNotFoundException(newTitle);
         }
-        roleRepository.updateQuery(newTitle, newDescription, oldTitle);
+        roleRepository.update(newTitle, newDescription, oldTitle);
         return roleDTO;
     }
 

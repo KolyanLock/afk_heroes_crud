@@ -1,6 +1,5 @@
-package com.kolyanlock.afk_heroes_crud.dao;
+package com.kolyanlock.afk_heroes_crud.dao.HeroClass;
 
-import com.kolyanlock.afk_heroes_crud.dto.heroClass.HeroClassDTO;
 
 public interface HeroClassCustomRepository {
     void update(String newTitle, String newDescription, String oldTitle);

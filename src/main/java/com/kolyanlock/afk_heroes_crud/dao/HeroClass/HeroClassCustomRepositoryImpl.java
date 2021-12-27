@@ -1,4 +1,4 @@
-package com.kolyanlock.afk_heroes_crud.dao;
+package com.kolyanlock.afk_heroes_crud.dao.HeroClass;
 
 import com.kolyanlock.afk_heroes_crud.entity.HeroClass;
 import lombok.RequiredArgsConstructor;

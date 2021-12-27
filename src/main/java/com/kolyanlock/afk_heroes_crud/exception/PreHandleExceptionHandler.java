@@ -13,13 +13,16 @@ public class PreHandleExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<ErrorBodyInfo> handleInvalidHeaderException(InvalidHeaderException ex, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.I_AM_A_TEAPOT;
+
         ErrorBodyInfo body = new ErrorBodyInfo();
         body.setTimestamp(LocalDateTime.now());
-        body.setStatus(HttpStatus.I_AM_A_TEAPOT);
-        body.setError(HttpStatus.I_AM_A_TEAPOT.getReasonPhrase());
+        body.setStatus(status.value());
+        body.setError(status.getReasonPhrase());
         body.setException(ex.getClass().getName());
         body.setMessage(ex.getMessage());
         body.setPath(request.getRequestURI());
-        return new ResponseEntity<>(body, HttpStatus.I_AM_A_TEAPOT);
+
+        return new ResponseEntity<>(body, status);
     }
 }

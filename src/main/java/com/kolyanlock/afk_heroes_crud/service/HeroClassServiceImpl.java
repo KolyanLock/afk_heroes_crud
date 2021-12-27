@@ -1,6 +1,6 @@
 package com.kolyanlock.afk_heroes_crud.service;
 
-import com.kolyanlock.afk_heroes_crud.dao.HeroClassRepository;
+import com.kolyanlock.afk_heroes_crud.dao.HeroClass.HeroClassRepository;
 import com.kolyanlock.afk_heroes_crud.dto.heroClass.HeroClassDTO;
 import com.kolyanlock.afk_heroes_crud.entity.HeroClass;
 import com.kolyanlock.afk_heroes_crud.exception.HeroClassExistsException;

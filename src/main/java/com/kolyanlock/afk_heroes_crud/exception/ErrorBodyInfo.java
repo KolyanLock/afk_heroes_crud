@@ -2,7 +2,6 @@ package com.kolyanlock.afk_heroes_crud.exception;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +11,7 @@ public class ErrorBodyInfo {
 
     private LocalDateTime timestamp;
 
-    private HttpStatus status;
+    private int status;
 
     private String error;
 

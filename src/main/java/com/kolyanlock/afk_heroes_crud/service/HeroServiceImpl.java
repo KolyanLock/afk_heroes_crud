@@ -1,6 +1,6 @@
 package com.kolyanlock.afk_heroes_crud.service;
 
-import com.kolyanlock.afk_heroes_crud.dao.HeroRepository;
+import com.kolyanlock.afk_heroes_crud.dao.Hero.HeroRepository;
 import com.kolyanlock.afk_heroes_crud.dto.hero.HeroDTO;
 import com.kolyanlock.afk_heroes_crud.dto.hero.HeroForListDTO;
 import com.kolyanlock.afk_heroes_crud.entity.Hero;

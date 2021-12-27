@@ -1,6 +1,6 @@
 package com.kolyanlock.afk_heroes_crud.service;
 
-import com.kolyanlock.afk_heroes_crud.dao.FractionRepository;
+import com.kolyanlock.afk_heroes_crud.dao.Fraction.FractionRepository;
 import com.kolyanlock.afk_heroes_crud.dto.fraction.FractionDTO;
 import com.kolyanlock.afk_heroes_crud.entity.Fraction;
 import com.kolyanlock.afk_heroes_crud.exception.FractionExistsException;
@@ -55,7 +55,7 @@ public class FractionServiceImpls implements FractionService {
         if (fractionRepository.findById(newTitle).isPresent()) {
             throw new FractionExistsException(newTitle);
         }
-        fractionRepository.updateQuery(newTitle, newDescription, oldTitle);
+        fractionRepository.update(newTitle, newDescription, oldTitle);
         return fractionDTO;
     }
 

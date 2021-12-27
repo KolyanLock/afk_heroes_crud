@@ -1,4 +1,4 @@
-package com.kolyanlock.afk_heroes_crud.dao;
+package com.kolyanlock.afk_heroes_crud.dao.Hero;
 
 import com.kolyanlock.afk_heroes_crud.entity.Hero;
 import org.springframework.data.domain.Page;
